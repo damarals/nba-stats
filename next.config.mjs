@@ -18,5 +18,16 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.nba.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 export default config;

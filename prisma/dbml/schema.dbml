@@ -1,0 +1,108 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table games {
+  id String [pk]
+  date DateTime [not null]
+  homeTeamId String [not null]
+  awayTeamId String [not null]
+  arenaName String [not null]
+  arenaState String [not null]
+  arenaCity String [not null]
+  seriesGameNumber String [not null]
+  seriesText String [not null]
+  homeTeam teams [not null]
+  awayTeam teams [not null]
+  playerStats player_stats [not null]
+
+  indexes {
+    (id) [pk]
+  }
+}
+
+Table teams {
+  id String [pk]
+  city String [not null]
+  name String [not null]
+  nameFull String [not null]
+  slug String [not null]
+  season String [not null]
+  conference String [not null]
+  division String [not null]
+  logo String [not null]
+  homeGames games [not null]
+  awayGames games [not null]
+  player players [not null]
+  teamStats team_stats [not null]
+
+  indexes {
+    (id) [pk]
+  }
+}
+
+Table players {
+  id String [pk]
+  teamId String [not null]
+  firstName String [not null]
+  lastName String [not null]
+  fullName String [not null]
+  slug String [not null]
+  birthdate DateTime [not null]
+  college String [not null]
+  country String [not null]
+  height Float [not null]
+  weight Float [not null]
+  experience Int [not null]
+  jerseyNumber String [not null]
+  position String [not null]
+  rosterStatus String [not null]
+  draftYear Int
+  draftRound Int
+  draftNumber Int
+  headshot String [not null]
+  team teams [not null]
+  playerStats player_stats [not null]
+
+  indexes {
+    (id) [pk]
+  }
+}
+
+Table team_stats {
+  teamId String [pk]
+  statName String [not null]
+  statValue Float [not null]
+  team teams [not null]
+
+  indexes {
+    (teamId) [pk]
+  }
+}
+
+Table player_stats {
+  gameId String [not null]
+  teamId String [not null]
+  playerId String [not null]
+  period Int [not null]
+  statName String [not null]
+  statValue Float [not null]
+  game games [not null]
+  player players [not null]
+
+  indexes {
+    (gameId, teamId, playerId, period, statName) [pk]
+  }
+}
+
+Ref: games.homeTeamId > teams.id
+
+Ref: games.awayTeamId > teams.id
+
+Ref: players.teamId > teams.id
+
+Ref: team_stats.teamId > teams.id
+
+Ref: player_stats.gameId > games.id
+
+Ref: player_stats.playerId > players.id

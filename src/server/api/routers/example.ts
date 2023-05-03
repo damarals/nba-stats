@@ -10,7 +10,13 @@ export const exampleRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
+  getPbpById: publicProcedure
+    .input(z.object({ gameId: z.number() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.playByPlay.findMany({
+        where: {
+          gameId: input.gameId,
+        },
+      });
+    }),
 });

@@ -1,63 +1,67 @@
+import requests
 import pandas as pd
-import pyarrow.parquet as pq
-import os
-import mysql.connector
-from mysql.connector import errorcode
+import MySQLdb as mysql
 
-# Configurações do banco de dados
-config = {
-  'user': os.getenv('MYSQL_USER'),
-  'password': os.getenv('MYSQL_PASSWORD'),
-  'host': os.getenv('MYSQL_HOST'),
-  'database': os.getenv('MYSQL_DATABASE'),
-}
+# Define a função para fazer o download do arquivo parquet
+def download_parquet_file(url, file_name):
+    response = requests.get(url)
+    with open(file_name, "wb") as f:
+        f.write(response.content)
 
-# Função para fazer o upsert no banco de dados
-def upsert(df, table_name):
-    try:
-        # Conexão com o banco de dados
-        cnx = mysql.connector.connect(**config)
-        cursor = cnx.cursor()
+def generate_insert_query(table_name, df):
+    # Obtém a lista de colunas do DataFrame
+    columns = df.columns.tolist()
+    
+    # Gera a string com a lista de colunas
+    columns_string = ", ".join(columns)
+    
+    # Gera a string com a lista de placeholders
+    placeholders = ", ".join(["%s"] * len(columns))
+    
+    # Cria a query de inserção
+    insert_query = f"""
+        INSERT IGNORE INTO {table_name} 
+        ({columns_string})
+        VALUES ({placeholders})
+    """
+    
+    return insert_query
 
-        # Colunas do dataframe
-        columns = list(df.columns)
+# Define a URL do arquivo parquet e o nome do arquivo para salvar localmente
+url = 'https://github.com/sportsdataverse/hoopR-nba-data/raw/main/nba/pbp/parquet/play_by_play_2023.parquet'
+file_name = 'play_by_play_2023.parquet'
 
-        # Lista de placeholders para os valores
-        values_placeholders = ', '.join(['%s'] * len(columns))
+# Faz o download do arquivo parquet
+download_parquet_file(url, file_name)
 
-        # Comando SQL para o upsert
-        upsert_query = f'''
-        INSERT INTO {table_name} ({', '.join(columns)})
-        VALUES ({values_placeholders})
-        ON DUPLICATE KEY UPDATE {', '.join([f"{col} = VALUES({col})" for col in columns])}
-        '''
+# Carrega o arquivo parquet em um DataFrame do Pandas
+da_pbp = pd.read_parquet('play_by_play_2023.parquet')
 
-        # Executa o upsert para cada linha do dataframe
-        for index, row in df.iterrows():
-            cursor.execute(upsert_query, tuple(row))
+# Conecta ao banco de dados MySQL
+connection = mysql.connect(
+    host='aws.connect.psdb.cloud',
+    user='httyr16ehwwohhx2rvog',
+    passwd='pscale_pw_W5dm3tRrspyCwxXrCoiH22ta2MwLHhufyWdRIEOkX6e',
+    db='nba-stats',
+    ssl_mode="VERIFY_IDENTITY",
+    ssl={
+        'ca': '/etc/ssl/certs/ca-certificates.crt'
+    }
+)
 
-        cnx.commit()
+# Cria a query de inserção
+insert_query = generate_insert_query("nba-stats.nba_pbp", da_pbp)
 
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Erro: acesso negado")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Erro: banco de dados não existe")
-        else:
-            print(err)
-    else:
-        cnx.close()
+# Cria um cursor para executar comandos SQL
+cursor = connection.cursor()
 
-# Loop para ler os arquivos parquet
-for year in range(2023):
-    filename = f'https://raw.githubusercontent.com/sportsdataverse/hoopR-nba-data/main/nba/pbp/parquet/play_by_play_{year}.parquet'
-    table_name = f'nba_pbp_{year}'
+# Itera sobre as linhas do DataFrame, inserindo no banco de dados
+for row in da_pbp.itertuples(index=False):
+    # Executa a query de inserção para a linha atual
+    cursor.execute(insert_query, row)
 
-    # Lê o arquivo parquet e cria o dataframe
-    table = pq.read_table(filename).to_pandas()
+# Faz o commit das alterações no banco de dados
+connection.commit()
 
-    # Cria uma coluna 'season' com o ano
-    table['season'] = year
-
-    # Faz o upsert no banco de dados
-    upsert(table, table_name)
+# Fecha a conexão
+connection.close()

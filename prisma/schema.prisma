@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -11,8 +8,105 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+model Game {
+  id               String
+  date             DateTime
+  homeTeamId       String
+  awayTeamId       String
+  arenaName        String
+  arenaState       String
+  arenaCity        String
+  seriesGameNumber String
+  seriesText       String
+
+  homeTeam    Team         @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam    Team         @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  playerStats PlayerStat[]
+
+  @@id([id])
+  @@index([awayTeamId])
+  @@index([homeTeamId])
+  @@map("games")
+}
+
+model Team {
+  id         String
+  city       String
+  name       String
+  nameFull   String
+  slug       String
+  season     String
+  conference String
+  division   String
+  logo       String
+
+  homeGames Game[]     @relation("HomeTeam")
+  awayGames Game[]     @relation("AwayTeam")
+  player    Player[]
+  teamStats TeamStat[]
+
+  @@id([id])
+  @@map("teams")
+}
+
+model Player {
+  id           String
+  teamId       String
+  firstName    String
+  lastName     String
+  fullName     String
+  slug         String
+  birthdate    DateTime
+  college      String
+  country      String
+  height       Float
+  weight       Float
+  experience   Int
+  jerseyNumber String
+  position     String
+  rosterStatus String
+  draftYear    Int?
+  draftRound   Int?
+  draftNumber  Int?
+  headshot     String
+
+  team        Team         @relation(fields: [teamId], references: [id])
+  playerStats PlayerStat[]
+
+  @@id([id])
+  @@index([teamId])
+  @@map("players")
+}
+
+model TeamStat {
+  teamId    String
+  statName  String
+  statValue Float
+
+  team Team @relation(fields: [teamId], references: [id])
+
+  @@id([teamId])
+  @@index([teamId])
+  @@map("team_stats")
+}
+
+model PlayerStat {
+  gameId    String
+  teamId    String
+  playerId  String
+  period    Int
+  statName  String
+  statValue Float
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@id([gameId, teamId, playerId, period, statName])
+  @@index([playerId])
+  @@index([gameId])
+  @@map("player_stats")
 }
