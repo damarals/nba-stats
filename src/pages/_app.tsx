@@ -1,5 +1,6 @@
 import { type AppType } from "next/app";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       </style>
       <main className={`${inter.variable} font-sans`}>
         <Component {...pageProps} />
+        <Analytics />
       </main>
     </>
   );
