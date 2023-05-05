@@ -77,44 +77,56 @@ export default {
         },
         "ball-bounce": {
           "0%": {
-            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+            transform: "scale(1.3, 0.8) translate3d(0, 0, 0)",
           },
-          "25%": {
-            transform: "scale(0.9, 1.07) translate3d(0, -50px, 0)",
+          "10%": {
+            transform: "scale(0.8, 1.1) translate3d(0, -20px, 0)",
           },
-          "50%": {
-            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+          "30%": {
+            transform: "scale(0.99, 1.01) translate3d(0, -70px, 0)",
           },
-          "75%": {
-            transform: "scale(0.9, 1.07) translate3d(0, -50px, 0)",
+          "60%": {
+            transform: "scale(1, 1) translate3d(0, -80px, 0)",
+          },
+          "80%": {
+            transform: "scale(0.81, 1.09) translate3d(0, -30px, 0)",
+          },
+          "90%": {
+            transform: "scale(0.8, 1.1) translate3d(0, -20px, 0)",
           },
           "100%": {
-            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+            transform: "scale(1.3, 0.8) translate3d(0, 0, 0)",
           },
         },
         "shadow-scale": {
           "0%": {
+            transform: "scaleX(1.3)",
+          },
+          "10%": {
+            transform: "scaleX(0.8)",
+          },
+          "30%": {
+            transform: "scaleX(0.99)",
+          },
+          "60%": {
             transform: "scaleX(1)",
           },
-          "25%": {
-            transform: "scaleX(0.9)",
+          "80%": {
+            transform: "scaleX(0.81)",
           },
-          "50%": {
-            transform: "scaleX(1)",
-          },
-          "75%": {
-            transform: "scaleX(0.9)",
+          "90%": {
+            transform: "scaleX(0.8)",
           },
           "100%": {
-            transform: "scaleX(1)",
+            transform: "scaleX(1.3)",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "ball-bounce": "ball-bounce 1.5s ease-in infinite",
-        "shadow-scale": "shadow-scale 1.5s ease-in infinite",
+        "ball-bounce": "ball-bounce 1.25s ease-in infinite",
+        "shadow-scale": "shadow-scale 1.25s ease-in infinite",
       },
     },
   },
