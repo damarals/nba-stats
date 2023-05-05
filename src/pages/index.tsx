@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 5000)
+    }, 6000)
     return () => clearTimeout(timer)
   }, [])
 

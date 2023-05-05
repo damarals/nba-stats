@@ -1,5 +1,5 @@
-import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import { type Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 export default {
   darkMode: ["class"],
@@ -77,46 +77,36 @@ export default {
         },
         "ball-bounce": {
           "0%": {
-            transform: "scale(1, 1) translate3d(0, 0, 0)",
+            transform: "translateY(-80px)",
           },
-          "25%": {
-            transform: "scale(1, 1.1) translate3d(0, 0, 0)",
+          "90%": {
+            "animation-timing-function": "linear",
+            transform: "translateY(-24px) scale(1, 1)",
           },
-          "30%": {
-            transform: "scale(0.95, 1.1) translate3d(0, 0, 0)",
-          },
-          "50%": {
-            transform: "scale(1.2, 0.65) translate3d(0, 150px, 0)",
-          },
-          "75%": {
-            transform: "scale(1, 1) translate3d(0, 0, 0)",
+          "100%": {
+            transform: "translateY(12px) scale(1.3, .7)",
           },
         },
         "shadow-scale": {
           "0%": {
-            transform: "scaleX(0.95)",
+            transform: "scaleX(0.75)",
           },
-          "25%": {
-            transform: "scaleX(0.94)",
-          },
-          "30%": {
-            transform: "scaleX(0.95)",
-          },
-          "50%": {
-            transform: "scaleX(1.2)",
-          },
-          "75%": {
+          "90%": {
+            "animation-timing-function": "linear",
             transform: "scaleX(1)",
+          },
+          "100%": {
+            transform: "scaleX(1.3)",
           },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "ball-bounce": "ball-bounce 1.15s infinite",
-        "shadow-scale": "shadow-scale 1.15s infinite",
+        "ball-bounce": "ball-bounce 0.7s cubic-bezier(.5,0,.75,.2) infinite alternate",
+        "shadow-scale": "shadow-scale 0.7s cubic-bezier(.5,0,.75,.2) infinite alternate",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+} satisfies Config
