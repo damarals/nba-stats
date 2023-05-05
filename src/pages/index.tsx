@@ -78,7 +78,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <main className="grid min-h-screen grid-rows-9 gap-4 bg-slate-100 p-10">
+      <main className="grid h-screen grid-rows-9 gap-4 bg-slate-100 p-10">
         {/* Head section */}
         <div className="row-span-1 space-y-1">
           <h1 className="text-xl font-bold">Título do Dash</h1>
