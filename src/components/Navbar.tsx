@@ -1,10 +1,7 @@
-import { Button } from "@/components/ui/primitives/button";
-import { BellIcon } from "lucide-react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/primitives/avatar";
+import { BellIcon } from "lucide-react"
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/primitives/avatar"
+import { Button } from "@/components/ui/primitives/button"
 
 const Navbar = () => {
   return (
@@ -17,7 +14,7 @@ const Navbar = () => {
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

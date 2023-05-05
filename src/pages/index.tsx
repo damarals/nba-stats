@@ -1,26 +1,27 @@
-import { type NextPage } from "next";
-import Head from "next/head";
-import Navbar from "@/components/Navbar";
-import BallLoader from "@/components/BallLoader";
-import { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import { useEffect, useState } from "react"
+import { type NextPage } from "next"
+import Head from "next/head"
+
+import BallLoader from "@/components/BallLoader"
+import Navbar from "@/components/Navbar"
+import Sidebar from "@/components/Sidebar"
 
 const Home: NextPage = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+      setLoading(false)
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [])
 
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <BallLoader />
       </div>
-    );
+    )
   }
 
   return (
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
