@@ -17,8 +17,11 @@ export default {
     },
     extend: {
       gridTemplateRows: {
-        // Simple 9 row grid
-        "9": "repeat(9, minmax(0, 1fr))",
+        // Simple 15 row grid
+        "15": "repeat(15, minmax(0, 1fr))",
+      },
+      gridRow: {
+        "span-14": "span 14 / span 14",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -72,10 +75,46 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "ball-bounce": {
+          "0%": {
+            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+          },
+          "25%": {
+            transform: "scale(0.9, 1.07) translate3d(0, -50px, 0)",
+          },
+          "50%": {
+            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+          },
+          "75%": {
+            transform: "scale(0.9, 1.07) translate3d(0, -50px, 0)",
+          },
+          "100%": {
+            transform: "scale(1.1, 0.9) translate3d(0, 0, 0)",
+          },
+        },
+        "shadow-scale": {
+          "0%": {
+            transform: "scaleX(1)",
+          },
+          "25%": {
+            transform: "scaleX(0.9)",
+          },
+          "50%": {
+            transform: "scaleX(1)",
+          },
+          "75%": {
+            transform: "scaleX(0.9)",
+          },
+          "100%": {
+            transform: "scaleX(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "ball-bounce": "ball-bounce 1.8s ease-in infinite",
+        "shadow-scale": "shadow-scale 1.8s ease-in infinite",
       },
     },
   },
