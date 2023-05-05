@@ -113,8 +113,8 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "ball-bounce": "ball-bounce 1.8s ease-in infinite",
-        "shadow-scale": "shadow-scale 1.8s ease-in infinite",
+        "ball-bounce": "ball-bounce 1.5s ease-in infinite",
+        "shadow-scale": "shadow-scale 1.5s ease-in infinite",
       },
     },
   },
