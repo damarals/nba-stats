@@ -125,8 +125,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "ball-bounce": "ball-bounce 1.25s ease-in infinite",
-        "shadow-scale": "shadow-scale 1.25s ease-in infinite",
+        "ball-bounce": "ball-bounce 1.15s cubic-bezier(0.5, 0, 1, 1) infinite",
+        "shadow-scale":
+          "shadow-scale 1.15s cubic-bezier(0.5, 0, 1, 1) infinite",
       },
     },
   },
