@@ -75,16 +75,24 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "ball-spin": {
+          from: {
+            transform: "rotate(0deg)",
+          },
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
         "ball-bounce": {
           "0%": {
-            transform: "translateY(-80px) rotate(0deg)",
+            transform: "translateY(-80px)",
           },
           "90%": {
             "animation-timing-function": "linear",
-            transform: "translateY(-24px) scale(1, 1) rotate(20deg)",
+            transform: "translateY(-24px) scale(1, 1)",
           },
           "100%": {
-            transform: "translateY(12px) scale(1.3, .7) rotate(12deg)",
+            transform: "translateY(12px) scale(1.3, .7)",
           },
         },
         "shadow-scale": {
@@ -103,6 +111,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "ball-spin": "ball-spin 1s linear infinite",
         "ball-bounce": "ball-bounce 0.7s cubic-bezier(.5,0,.75,.2) infinite alternate",
         "shadow-scale": "shadow-scale 0.7s cubic-bezier(.5,0,.75,.2) infinite alternate",
       },
