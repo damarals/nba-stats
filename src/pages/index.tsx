@@ -7,16 +7,16 @@ import Navbar from "@/components/Navbar"
 import Sidebar from "@/components/Sidebar"
 
 const Home: NextPage = () => {
-  // const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false)
-  //   }, 6000)
-  //   return () => clearTimeout(timer)
-  // }, [])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 6000)
+    return () => clearTimeout(timer)
+  }, [])
 
-  if (true) {
+  if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
         <BallLoader />
