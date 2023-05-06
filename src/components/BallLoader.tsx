@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn"
 
 export default function BallLoader() {
   return (
-    <div className="relative -left-7 -top-7">
+    <div className="relative">
       {/* ball bounce */}
       <div className="h-14 w-14 animate-ball-bounce">
         {/* ball spin */}
