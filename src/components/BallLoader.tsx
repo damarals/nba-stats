@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn"
 
-const BallLoader = () => {
+export default function BallLoader() {
   return (
     <div className="relative -left-7 -top-7">
       {/* ball bounce */}
@@ -18,12 +18,10 @@ const BallLoader = () => {
               "absolute rounded-[50%] border-2 border-black w-[50px] h-[50px] -left-5 -top-5",
               "before:content-[''] before:absolute before:rounded-[50%] before:border-2 before:border-black before:w-[50px] before:h-[50px] before:top-10 before:left-10"
             )}
-          ></div>
+          />
         </div>
       </div>
-      <div className="absolute top-14 h-2 w-14 animate-shadow-scale rounded-[50%] bg-black/20"></div>
+      <div className="absolute top-14 h-2 w-14 animate-shadow-scale rounded-[50%] bg-black/20" />
     </div>
   )
 }
-
-export default BallLoader

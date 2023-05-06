@@ -3,7 +3,7 @@ import { BellIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/primitives/avatar"
 import { Button } from "@/components/ui/primitives/button"
 
-const Navbar = () => {
+export default function Navbar() {
   return (
     <nav className="row-span-1 flex items-center justify-end space-x-3 px-4">
       <Button variant="ghost">
@@ -16,5 +16,3 @@ const Navbar = () => {
     </nav>
   )
 }
-
-export default Navbar
