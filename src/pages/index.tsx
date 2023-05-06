@@ -29,14 +29,14 @@ const Home: NextPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <main className="flex h-screen">
+      <div className="flex h-screen">
         <Sidebar />
         <div className="grid flex-grow grid-rows-15 bg-white">
           <Navbar />
           {/* Main section */}
           <section className="row-span-14"></section>
         </div>
-      </main>
+      </div>
     </>
   )
 }

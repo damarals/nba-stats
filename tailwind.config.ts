@@ -77,14 +77,14 @@ export default {
         },
         "ball-bounce": {
           "0%": {
-            transform: "translateY(-80px)",
+            transform: "translateY(-80px) rotate(0deg)",
           },
           "90%": {
             "animation-timing-function": "linear",
-            transform: "translateY(-24px) scale(1, 1)",
+            transform: "translateY(-24px) scale(1, 1) rotate(20deg)",
           },
           "100%": {
-            transform: "translateY(12px) scale(1.3, .7)",
+            transform: "translateY(12px) scale(1.3, .7) rotate(12deg)",
           },
         },
         "shadow-scale": {
