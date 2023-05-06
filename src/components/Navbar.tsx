@@ -17,10 +17,10 @@ import { Separator } from "@/components/ui/primitives/separator"
 
 export default function Navbar() {
   return (
-    <nav className="row-span-1 flex items-center justify-end p-4">
+    <nav className="row-span-1 flex items-center justify-end p-2">
       <Popover>
         <PopoverTrigger>
-          <Button variant="ghost">
+          <Button variant="ghost" className="px-3">
             <BellIcon size={25} />
           </Button>
         </PopoverTrigger>
@@ -37,7 +37,7 @@ export default function Navbar() {
       </Popover>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="hover:bg-transparent">
+          <Button variant="ghost" className="hover:bg-transparent px-3">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
