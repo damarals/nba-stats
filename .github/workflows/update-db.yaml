@@ -4,9 +4,7 @@ name: Atualização do banco de dados
 # on:
 #   schedule:
 #     - cron: "0 12 * * *" # Executar diariamente às 12h
-on push:
-  branches:
-    - main
+on: push
 
 jobs:
   atualizacao_nba:
