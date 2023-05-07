@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { type NextPage } from "next"
 import Head from "next/head"
+import Rive from "@rive-app/react-canvas"
 
-import BallLoader from "@/components/BallLoader"
 import Navbar from "@/components/Navbar"
 import Sidebar from "@/components/Sidebar"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <BallLoader />
+        <Rive src="basketball-bounce.riv" className="w-48 h-48" />
       </div>
     )
   }
