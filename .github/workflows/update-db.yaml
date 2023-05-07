@@ -1,10 +1,8 @@
 name: Atualização do banco de dados
 
-# run on push to master
-# on:
-#   schedule:
-#     - cron: "0 12 * * *" # Executar diariamente às 12h
-on: push
+on:
+  schedule:
+    - cron: "0 12 * * *" # Executar diariamente às 12h
 
 jobs:
   atualizacao_nba:
