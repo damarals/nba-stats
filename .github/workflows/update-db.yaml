@@ -1,8 +1,12 @@
 name: Atualização do banco de dados
 
-on:
-  schedule:
-    - cron: "0 12 * * *" # Executar diariamente às 12h
+# run on push to master
+# on:
+#   schedule:
+#     - cron: "0 12 * * *" # Executar diariamente às 12h
+on push:
+  branches:
+    - main
 
 jobs:
   atualizacao_nba:
@@ -16,6 +20,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.9"
+
+      - name: Mostra o caminho do certificado SSL
+        run: openssl version -d
 
       - name: Instalação de dependências
         run: |
