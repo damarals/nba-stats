@@ -10,6 +10,7 @@ specifiers:
   '@radix-ui/react-popover': ^1.0.5
   '@radix-ui/react-select': ^1.2.1
   '@radix-ui/react-separator': ^1.0.2
+  '@radix-ui/react-tooltip': ^1.0.5
   '@tanstack/react-query': ^4.28.0
   '@tremor/react': ^2.2.0
   '@trpc/client': ^10.18.0
@@ -31,11 +32,12 @@ specifiers:
   date-fns: ^2.29.3
   eslint: ^8.36.0
   eslint-config-next: ^13.2.4
+  jotai: ^2.1.0
   lucide-react: ^0.172.0
   next: ^13.2.4
   postcss: ^8.4.21
-  prettier: ^2.8.6
-  prettier-plugin-tailwindcss: ^0.2.6
+  prettier: ^2.8.7
+  prettier-plugin-tailwindcss: ^0.2.7
   prisma: ^4.11.0
   prisma-dbml-generator: ^0.10.0
   react: 18.2.0
@@ -58,6 +60,7 @@ dependencies:
   '@radix-ui/react-popover': 1.0.5_zn3vyfk3tbnwebg5ldvieekjaq
   '@radix-ui/react-select': 1.2.1_zn3vyfk3tbnwebg5ldvieekjaq
   '@radix-ui/react-separator': 1.0.2_biqbaboplfbrettd7655fr4n2y
+  '@radix-ui/react-tooltip': 1.0.5_zn3vyfk3tbnwebg5ldvieekjaq
   '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
   '@tremor/react': 2.2.0_biqbaboplfbrettd7655fr4n2y
   '@trpc/client': 10.18.0_@trpc+server@10.18.0
@@ -69,6 +72,7 @@ dependencies:
   class-variance-authority: 0.5.2_typescript@5.0.3
   clsx: 1.2.1
   date-fns: 2.29.3
+  jotai: 2.1.0_react@18.2.0
   lucide-react: 0.172.0_react@18.2.0
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -1214,6 +1218,31 @@ packages:
       '@babel/runtime': 7.21.0
       '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-tooltip/1.0.5_zn3vyfk3tbnwebg5ldvieekjaq:
+    resolution: {integrity: sha512-cDKVcfzyO6PpckZekODJZDe5ZxZ2fCZlzKzTmPhe4mX9qTHRfLcKgqb0OKf22xLwDequ2tVleim+ZYx3rabD5w==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@radix-ui/primitive': 1.0.0
+      '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-dismissable-layer': 1.0.3_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-id': 1.0.0_react@18.2.0
+      '@radix-ui/react-popper': 1.1.1_zn3vyfk3tbnwebg5ldvieekjaq
+      '@radix-ui/react-portal': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-presence': 1.0.0_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-primitive': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-slot': 1.0.1_react@18.2.0
+      '@radix-ui/react-use-controllable-state': 1.0.0_react@18.2.0
+      '@radix-ui/react-visually-hidden': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@radix-ui/react-use-callback-ref/1.0.0_react@18.2.0:
@@ -3486,6 +3515,18 @@ packages:
   /jiti/1.18.2:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
+
+  /jotai/2.1.0_react@18.2.0:
+    resolution: {integrity: sha512-fR82PtHAmEQrc/daMEYGc4EteW96/b6wodtDSCzLvoJA/6y4YG70er4hh2f8CYwYjqwQ0eZUModGfG4DmwkTyQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /js-sdsl/4.4.0:
     resolution: {integrity: sha512-FfVSdx6pJ41Oa+CF7RDaFmTnCaFhua+SNYQX74riGOpl96x+2jQCqEfQ2bnXu/5DPCqlRuiqyvTJM0Qjz26IVg==}

@@ -16,11 +16,17 @@ export default {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        "12": "repeat(12, minmax(0, 1fr))",
+      },
       gridTemplateRows: {
-        // Simple 15 row grid
+        "10": "repeat(10, minmax(0, 1fr))",
         "15": "repeat(15, minmax(0, 1fr))",
       },
       gridRow: {
+        "span-14": "span 14 / span 14",
+      },
+      gridColumn: {
         "span-14": "span 14 / span 14",
       },
       colors: {

@@ -4,6 +4,7 @@ import { api } from "@/utils/api"
 import { Analytics } from "@vercel/analytics/react"
 
 import "@/styles/globals.css"
+import { Provider } from "jotai"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         `}
       </style>
       <main className={`${inter.variable} font-sans`}>
-        <Component {...pageProps} />
+        <Provider>
+          <Component {...pageProps} />
+        </Provider>
         <Analytics />
       </main>
     </>
