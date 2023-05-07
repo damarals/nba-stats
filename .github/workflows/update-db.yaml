@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Mostra o caminho do certificado SSL
-        run: openssl version -d
+      - name: Update-ca-certificates
+        run: sudo update-ca-certificates
 
       - name: Instalação de dependências
         run: |
