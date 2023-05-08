@@ -1,77 +1,62 @@
-import { type NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import { useState } from "react"
+import { type NextPage } from "next"
+import Head from "next/head"
+import Image from "next/image"
+import { api } from "@/utils/api"
+import { format } from "date-fns"
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/primitives/select";
-import { CalendarDateRangePicker } from "@/components/ui/primitives/datePick";
-import { Checkbox } from "@/components/ui/primitives/checkbox";
-import { Label } from "@/components/ui/primitives/label";
-import LineChart from "@/components/ui/LineChart";
-import { useState } from "react";
-import { api } from "@/utils/api";
-import { format } from "date-fns";
+import LineChart from "@/components/ui/LineChart"
+import { Checkbox } from "@/components/ui/primitives/checkbox"
+import { CalendarDateRangePicker } from "@/components/ui/primitives/datePick"
+import { Label } from "@/components/ui/primitives/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/primitives/select"
 
 type PlayerStats = {
-  gameDate: Date;
-  statValue: number;
-  meanValue?: number;
-};
+  gameDate: Date
+  statValue: number
+  meanValue?: number
+}
 
 function formatData(data: PlayerStats[] | undefined) {
-  if (!data) return [] as PlayerStats[];
+  if (!data) return [] as PlayerStats[]
   return data.map((result) => {
-    const gameDate = format(result.gameDate, "dd/MMM");
+    const gameDate = format(result.gameDate, "dd/MMM")
     return {
       gameDate,
       statValue: result.statValue,
       meanValue: result.meanValue,
-    };
-  });
+    }
+  })
 }
 
 const Home: NextPage = () => {
-  const [selectedTeamId, setSelectedTeamId] = useState("1610612745");
-  const [selectedPlayerId, setSelectedPlayerId] = useState("1630224");
-  const [selectedStatistic, setSelectedStatistic] = useState("pts");
-  const [meanLine, setMeanLine] = useState(true);
+  const [selectedTeamId, setSelectedTeamId] = useState("1610612745")
+  const [selectedPlayerId, setSelectedPlayerId] = useState("1630224")
+  const [selectedStatistic, setSelectedStatistic] = useState("pts")
+  const [meanLine, setMeanLine] = useState(true)
 
-  const { data: teams } = api.team.getTeams.useQuery();
+  const { data: teams } = api.team.getTeams.useQuery()
   const { data: players } = api.player.getPlayersFromTeam.useQuery({
     teamId: selectedTeamId,
-  });
+  })
   const { data: playerStats } = api.stats.getPlayerStats.useQuery({
     teamId: selectedTeamId,
     playerId: selectedPlayerId,
     statisticName: selectedStatistic,
-  });
+  })
   // TODO: round in tooltip
   const meanValue =
     playerStats &&
-    parseFloat(
-      (
-        playerStats.reduce((acc, curr) => acc + curr.statValue, 0) /
-        playerStats.length
-      ).toFixed(1)
-    );
+    parseFloat((playerStats.reduce((acc, curr) => acc + curr.statValue, 0) / playerStats.length).toFixed(1))
 
   const playerStatsWithMean = playerStats?.map((stat) => ({
     ...stat,
     meanValue,
-  }));
+  }))
 
-  const selectedPlayer = players?.find(
-    (player) => player.id === selectedPlayerId
-  );
-  const selectedTeam = teams?.find((team) => team.id === selectedTeamId);
-  const selectedStatisticData = statistics.find(
-    (stat) => stat.dbName === selectedStatistic
-  );
+  const selectedPlayer = players?.find((player) => player.id === selectedPlayerId)
+  const selectedTeam = teams?.find((team) => team.id === selectedTeamId)
+  const selectedStatisticData = statistics.find((stat) => stat.dbName === selectedStatistic)
 
   return (
     <>
@@ -99,9 +84,7 @@ const Home: NextPage = () => {
             ) : null}
           </div>
           <div className="flex flex-col space-y-2 rounded-md bg-white p-6 shadow-md md:col-span-4">
-            <span className="text-5xl font-bold">
-              {selectedPlayer?.fullName}
-            </span>
+            <span className="text-5xl font-bold">{selectedPlayer?.fullName}</span>
             <span className="text-lg font-light">
               {selectedPlayer && selectedTeam
                 ? `${selectedTeam?.nameFull} | #${selectedPlayer?.jerseyNumber} | ${selectedPlayer?.position}`
@@ -113,8 +96,7 @@ const Home: NextPage = () => {
         <div className="row-span-6 grid gap-4 md:grid-cols-4">
           <div className="flex flex-col rounded-md bg-white px-6 py-4 shadow-md md:col-span-3">
             <h2>
-              Gráfico de {selectedStatisticData?.name} (
-              {selectedStatisticData?.abbreviation})
+              Gráfico de {selectedStatisticData?.name} ({selectedStatisticData?.abbreviation})
             </h2>
             {playerStatsWithMean ? (
               <LineChart
@@ -131,10 +113,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col space-y-4">
               <div className="space-y-1 rounded-md">
                 <span className="font-semibold">Time:</span>
-                <Select
-                  defaultValue={selectedTeamId}
-                  onValueChange={(value) => setSelectedTeamId(value)}
-                >
+                <Select defaultValue={selectedTeamId} onValueChange={(value) => setSelectedTeamId(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione..." />
                   </SelectTrigger>
@@ -143,12 +122,7 @@ const Home: NextPage = () => {
                       teams.map((team) => (
                         <SelectItem key={team.id} value={team.id}>
                           <div className="flex space-x-3">
-                            <Image
-                              src={team.logo}
-                              alt={`Logo do Time ${team.nameFull}`}
-                              width={20}
-                              height={20}
-                            />
+                            <Image src={team.logo} alt={`Logo do Time ${team.nameFull}`} width={20} height={20} />
                             <span className="font-normal">{team.nameFull}</span>
                           </div>
                         </SelectItem>
@@ -163,10 +137,7 @@ const Home: NextPage = () => {
               </div>
               <div className="space-y-1 rounded-md">
                 <span className="font-semibold">Jogador:</span>
-                <Select
-                  defaultValue={selectedPlayerId}
-                  onValueChange={(value) => setSelectedPlayerId(value)}
-                >
+                <Select defaultValue={selectedPlayerId} onValueChange={(value) => setSelectedPlayerId(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione..." />
                   </SelectTrigger>
@@ -191,24 +162,16 @@ const Home: NextPage = () => {
               </div>
               <div className="space-y-1 rounded-md">
                 <span className="font-semibold">Estatística:</span>
-                <Select
-                  defaultValue={selectedStatistic}
-                  onValueChange={(value) => setSelectedStatistic(value)}
-                >
+                <Select defaultValue={selectedStatistic} onValueChange={(value) => setSelectedStatistic(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione..." />
                   </SelectTrigger>
                   <SelectContent>
                     {statistics ? (
                       statistics.map((statistic) => (
-                        <SelectItem
-                          key={statistic.dbName}
-                          value={statistic.dbName}
-                        >
+                        <SelectItem key={statistic.dbName} value={statistic.dbName}>
                           <div className="flex space-x-2">
-                            <span className="w-8 text-right">
-                              {statistic.abbreviation}
-                            </span>
+                            <span className="w-8 text-right">{statistic.abbreviation}</span>
                             <span>-</span>
                             <span>{statistic.name}</span>
                           </div>
@@ -223,9 +186,7 @@ const Home: NextPage = () => {
                 </Select>
               </div>
               <div className="space-y-1 rounded-md">
-                <span className="font-semibold">
-                  Intervalo de jogos a serem analisados:
-                </span>
+                <span className="font-semibold">Intervalo de jogos a serem analisados:</span>
                 <CalendarDateRangePicker />
               </div>
             </div>
@@ -233,24 +194,18 @@ const Home: NextPage = () => {
             <div className="space-y-1 rounded-md">
               <span className="font-semibold">Configurações Adicionais:</span>
               <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="meanLine"
-                  checked={meanLine}
-                  onClick={() => setMeanLine(!meanLine)}
-                />
-                <Label htmlFor="meanLine">
-                  Linha Média Histórica da Estatística
-                </Label>
+                <Checkbox id="meanLine" checked={meanLine} onClick={() => setMeanLine(!meanLine)} />
+                <Label htmlFor="meanLine">Linha Média Histórica da Estatística</Label>
               </div>
             </div>
           </div>
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 const statistics = [
   {
@@ -353,4 +308,4 @@ const statistics = [
     name: "Plus/Minus",
     abbreviation: "+/-",
   },
-];
+]

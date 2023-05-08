@@ -21,6 +21,7 @@ export function CalendarDateRangePicker({ className }: React.HTMLAttributes<HTML
       <Popover>
         <PopoverTrigger asChild>
           <Button
+            disabled={true}
             id="date"
             variant={"outline"}
             className={cn("justify-start text-left font-normal", !date && "text-muted-foreground")}

@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
-import { cn } from "@/utils/cn";
+import { forwardRef } from "react"
+import { cn } from "@/utils/cn"
 import {
   CartesianGrid,
   Legend,
@@ -9,27 +9,26 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
+} from "recharts"
 
-type ValueFormatter = (value: number) => string;
+type ValueFormatter = (value: number) => string
 
-const defaultValueFormatter: ValueFormatter = (value: number) =>
-  value.toString();
+const defaultValueFormatter: ValueFormatter = (value: number) => value.toString()
 
 interface LineChartProps {
-  data: unknown[];
-  categories: string[];
-  index: string;
-  legendHeight?: number;
-  colors?: string[];
-  valueFormatter?: (value: number) => string;
-  meanLine?: boolean;
-  startEndOnly?: boolean;
-  showGridLines?: boolean;
-  autoMinValue?: boolean;
-  minValue?: number;
-  maxValue?: number;
-  className?: string;
+  data: unknown[]
+  categories: string[]
+  index: string
+  legendHeight?: number
+  colors?: string[]
+  valueFormatter?: (value: number) => string
+  meanLine?: boolean
+  startEndOnly?: boolean
+  showGridLines?: boolean
+  autoMinValue?: boolean
+  minValue?: number
+  maxValue?: number
+  className?: string
 }
 
 const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
@@ -42,11 +41,11 @@ const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
     meanLine = true,
     className,
     ...other
-  } = props;
+  } = props
 
   return (
     <div ref={ref} className={cn("w-full", className)} {...other}>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" className="-ml-4">
         <ReChartsLineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
@@ -62,10 +61,7 @@ const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
             style={{ fontSize: "12px", fontFamily: "Inter, Helvetica" }}
             tickFormatter={valueFormatter}
           />
-          <Tooltip
-            wrapperStyle={{ outline: "none" }}
-            cursor={{ stroke: "#2C95F5", strokeWidth: 1 }}
-          />
+          <Tooltip wrapperStyle={{ outline: "none" }} cursor={{ stroke: "#4B526C", strokeWidth: 1 }} />
           <Legend align="right" verticalAlign="top" height={legendHeight} />
           {categories.map((category) => (
             <Line
@@ -74,8 +70,8 @@ const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
               type="linear"
               dataKey="statValue"
               strokeWidth={4}
-              stroke="#2C95F5" // green: #23D692
-              dot={{ fill: "#FFFFFF", stroke: "#2C95F5", strokeWidth: 4, r: 6 }}
+              stroke="#FB923C"
+              dot={{ fill: "#FFFFFF", stroke: "#FB923C", strokeWidth: 4, r: 6 }}
               activeDot={{
                 fill: "#FFFFFF",
                 stroke: "#4B526C",
@@ -100,8 +96,8 @@ const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
         </ReChartsLineChart>
       </ResponsiveContainer>
     </div>
-  );
-});
+  )
+})
 
-LineChart.displayName = "LineChart";
-export default LineChart;
+LineChart.displayName = "LineChart"
+export default LineChart
