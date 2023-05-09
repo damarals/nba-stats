@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <Sidebar />
         <div className="grid flex-grow grid-rows-15 bg-white">
           <Navbar />
