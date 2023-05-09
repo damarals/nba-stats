@@ -44,8 +44,8 @@ const LineChart = forwardRef<HTMLDivElement, LineChartProps>((props, ref) => {
   } = props
 
   return (
-    <div ref={ref} className={cn("w-full", className)} {...other}>
-      <ResponsiveContainer width="100%" height="100%" className="-ml-4">
+    <div ref={ref} className={cn("w-full flex", className)} {...other}>
+      <ResponsiveContainer width="100%" height={520} className="-ml-4 items-center">
         <ReChartsLineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
