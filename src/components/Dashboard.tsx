@@ -109,28 +109,28 @@ export default function Dashboard() {
               <div className="flex flex-col items-center border-r-2 pr-2 sm:pr-4">
                 <span className="text-sm sm:text-xl font-semibold">PTS</span>
                 <span className="font-bold text-2xl sm:text-3xl text-orange-500">
-                  {playerStatsOverall?.pts.toFixed(1)}
+                  {playerStatsOverall?.pts?.toFixed(1)}
                 </span>
               </div>
               <div className="flex flex-col items-center border-r-2 px-2 sm:px-4">
                 <span className="text-sm sm:text-xl font-semibold">REB</span>
                 <span className="font-bold text-2xl sm:text-3xl text-orange-500">
-                  {playerStatsOverall?.reb.toFixed(1)}
+                  {playerStatsOverall?.reb?.toFixed(1)}
                 </span>
               </div>
               <div className="flex flex-col items-center md:border-r-2 px-2 sm:px-4">
                 <span className="text-sm sm:text-xl font-semibold">AST</span>
                 <span className="font-bold text-2xl sm:text-3xl text-orange-500">
-                  {playerStatsOverall?.ast.toFixed(1)}
+                  {playerStatsOverall?.ast?.toFixed(1)}
                 </span>
               </div>
               <div className="md:flex flex-col items-center border-r-2 px-4 hidden">
                 <span className="text-xl font-semibold">BLK</span>
-                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.blk.toFixed(1)}</span>
+                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.blk?.toFixed(1)}</span>
               </div>
               <div className="md:flex flex-col items-center pl-4 hidden">
                 <span className="text-xl font-semibold">STL</span>
-                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.stl.toFixed(1)}</span>
+                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.stl?.toFixed(1)}</span>
               </div>
             </div>
           </div>
