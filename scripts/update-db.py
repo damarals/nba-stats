@@ -16,7 +16,7 @@ connection = mysql.connect(
     password = os.environ['PASSWORD'],
     ssl_mode = os.environ['SSL_MODE'],
     ssl = {
-        'ca': os.environ['SSL_CA'],
+        'ca': '/etc/ssl/certs/ca-certificates.crt', #os.environ['SSL_CA'],
     }
 )
 
