@@ -9,6 +9,10 @@ from nba_scrapper.teams import get_teams
 from nba_scrapper.players import get_players
 
 # DB Connection
+
+print(os.environ['HOST'])
+print(os.environ['SSL_CA'])
+
 connection = mysql.connect(
     host = os.environ['HOST'],
     database = os.environ['DATABASE'],
@@ -16,7 +20,7 @@ connection = mysql.connect(
     password = os.environ['PASSWORD'],
     ssl_mode = os.environ['SSL_MODE'],
     ssl = {
-        'ca': '/etc/ssl/certs/ca-certificates.crt', #os.environ['SSL_CA'],
+        'ca': os.environ['SSL_CA'],
     }
 )
 
