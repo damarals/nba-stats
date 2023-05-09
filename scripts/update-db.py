@@ -9,19 +9,16 @@ from nba_scrapper.teams import get_teams
 from nba_scrapper.players import get_players
 
 # DB Connection
-
-print(os.environ)
-
-# connection = mysql.connect(
-#     host = os.environ['HOST'],
-#     database = os.environ['DATABASE'],
-#     user = os.environ['USER'],
-#     password = os.environ['PASSWORD'],
-#     ssl_mode = os.environ['SSL_MODE'],
-#     ssl = {
-#         'ca': os.environ['SSL_CA'],
-#     }
-# )
+connection = mysql.connect(
+    host = os.environ['HOST'],
+    database = os.environ['DATABASE'],
+    user = os.environ['USER'],
+    password = os.environ['PASSWORD'],
+    ssl_mode = os.environ['SSL_MODE'],
+    ssl = {
+        'ca': os.environ['SSL_CERT'],
+    }
+)
 
 # Params
 ACTUAL_SEASON = 2023 # TODO: Get this auto
