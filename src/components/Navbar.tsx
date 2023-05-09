@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/primitives/separator"
 function Notification() {
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant="ghost" className="px-3">
           <BellIcon size={25} />
         </Button>

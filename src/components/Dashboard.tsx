@@ -4,6 +4,7 @@ import { statistics } from "@/data/statistics"
 import { api } from "@/utils/api"
 import { format } from "date-fns"
 
+import BallLoader from "@/components/BallLoader"
 import LineChart from "@/components/ui/LineChart"
 import { Checkbox } from "@/components/ui/primitives/checkbox"
 import { CalendarDateRangePicker } from "@/components/ui/primitives/datePick"
@@ -43,6 +44,11 @@ export default function Dashboard() {
     playerId: selectedPlayerId,
     statisticName: selectedStatistic,
   })
+  const { data: playerStatsOverall } = api.stats.getPlayerOverallStats.useQuery({
+    teamId: selectedTeamId,
+    playerId: selectedPlayerId,
+  })
+
   const meanValue =
     playerStats &&
     parseFloat((playerStats.reduce((acc, curr) => acc + curr.statValue, 0) / playerStats.length).toFixed(1))
@@ -54,6 +60,9 @@ export default function Dashboard() {
   const selectedPlayer = players?.find((player) => player.id === selectedPlayerId)
   const selectedTeam = teams?.find((team) => team.id === selectedTeamId)
   const selectedStatisticData = statistics.find((stat) => stat.dbName === selectedStatistic)
+
+  // show ball loader and wait 1s before showing the dashboard
+  if (!teams && !players && !playerStats) return <BallLoader />
 
   return (
     <section className="row-span-14 grid grid-cols-12 gap-4 p-4 bg-slate-100">
@@ -99,23 +108,29 @@ export default function Dashboard() {
             <div className="flex">
               <div className="flex flex-col items-center border-r-2 pr-2 sm:pr-4">
                 <span className="text-sm sm:text-xl font-semibold">PTS</span>
-                <span className="font-bold text-2xl sm:text-5xl text-orange-500">23</span>
+                <span className="font-bold text-2xl sm:text-3xl text-orange-500">
+                  {playerStatsOverall?.pts.toFixed(1)}
+                </span>
               </div>
               <div className="flex flex-col items-center border-r-2 px-2 sm:px-4">
                 <span className="text-sm sm:text-xl font-semibold">REB</span>
-                <span className="font-bold text-2xl sm:text-5xl text-orange-500">4</span>
+                <span className="font-bold text-2xl sm:text-3xl text-orange-500">
+                  {playerStatsOverall?.reb.toFixed(1)}
+                </span>
               </div>
               <div className="flex flex-col items-center md:border-r-2 px-2 sm:px-4">
                 <span className="text-sm sm:text-xl font-semibold">AST</span>
-                <span className="font-bold text-2xl sm:text-5xl text-orange-500">3</span>
+                <span className="font-bold text-2xl sm:text-3xl text-orange-500">
+                  {playerStatsOverall?.ast.toFixed(1)}
+                </span>
               </div>
               <div className="md:flex flex-col items-center border-r-2 px-4 hidden">
                 <span className="text-xl font-semibold">BLK</span>
-                <span className="font-bold text-5xl text-orange-500">1</span>
+                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.blk.toFixed(1)}</span>
               </div>
               <div className="md:flex flex-col items-center pl-4 hidden">
                 <span className="text-xl font-semibold">STL</span>
-                <span className="font-bold text-5xl text-orange-500">2</span>
+                <span className="font-bold text-3xl text-orange-500">{playerStatsOverall?.stl.toFixed(1)}</span>
               </div>
             </div>
           </div>
