@@ -135,10 +135,9 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col row-span-4 rounded-md bg-white px-1 md:px-6 py-4 shadow-lg">
+        <div className="relative flex flex-col row-span-4 rounded-md bg-white px-1 md:px-6 py-4 shadow-lg">
           {playerStatsWithMean ? (
             <LineChart
-              className="md:h-full"
               data={formatData(playerStatsWithMean)}
               index="gameDate"
               categories={[selectedStatisticData?.name || ""]}
