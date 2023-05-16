@@ -41,5 +41,6 @@ def get_games(season: int) -> pd.DataFrame:
 
     da_games = pd.DataFrame(games_list)
     da_games['date'] = pd.to_datetime(da_games['date'], format = '%m/%d/%Y %H:%M:%S').dt.date
+    da_games = da_games[(da_games['homeTeamId'] != '0') & (da_games['awayTeamId'] != '0')]
     
     return da_games
