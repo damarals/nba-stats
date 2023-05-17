@@ -1,3 +1,4 @@
 pandas
+python3-urllib3
 requests
 mysqlclient
