@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+
 from nba_scrapper.utils import nba_headers
 
 def get_teams(season: int) -> pd.DataFrame:

@@ -1,7 +1,8 @@
-import requests
-import pandas as pd
-import datetime
 import time
+import requests
+import datetime
+import pandas as pd
+
 from nba_scrapper.utils import nba_headers, convert_minutes
 
 ## Players

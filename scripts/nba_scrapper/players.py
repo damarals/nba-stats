@@ -1,6 +1,7 @@
+import time
 import requests
 import pandas as pd
-import time
+
 from nba_scrapper.utils import nba_headers, convert_height, convert_weight
 
 def __get_player_info_from_id(player_id: str) -> pd.DataFrame:

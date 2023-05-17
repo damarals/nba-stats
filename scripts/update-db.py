@@ -1,7 +1,7 @@
 import os
+import requests
 import datetime
 import MySQLdb as mysql
-import requests
 
 from nba_scrapper.utils import get_db_max_gamedate, insert_data_to_mysql
 from nba_scrapper.games import get_games
@@ -26,10 +26,6 @@ ACTUAL_SEASON = 2023 # TODO: Get this auto
 LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1)
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
-
-response = requests.get('https://pokeapi.co/api/v2/pokemon/1')
-print(response.json())
-
 
 # Get Data
 ## new games (+old games with a threshold)

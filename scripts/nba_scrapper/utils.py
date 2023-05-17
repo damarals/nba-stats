@@ -1,6 +1,5 @@
-import datetime
-import pandas as pd
 import time
+import pandas as pd
 
 nba_headers = {
     'Host': 'stats.nba.com',

@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+
 from nba_scrapper.utils import nba_headers
 
 def get_games(season: int) -> pd.DataFrame:
@@ -19,7 +20,7 @@ def get_games(season: int) -> pd.DataFrame:
     """
     season = season - 1
     url = f'https://stats.nba.com/stats/scheduleleaguev2?LeagueID=00&Season={season}'
-    response = requests.get(url) #, headers = nba_headers)
+    response = requests.get(url, headers = nba_headers)
     json_data = response.json()
 
     games_list = []
