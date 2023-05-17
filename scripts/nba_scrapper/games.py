@@ -18,6 +18,7 @@ def get_games(season: int) -> pd.DataFrame:
         represents a game detail, such as the game ID, date, home and 
         away team IDs, arena, and other details.
     """
+    print(nba_headers)
     season = season - 1
     url = f'https://stats.nba.com/stats/scheduleleaguev2?LeagueID=00&Season={season}'
     response = requests.get(url, headers = nba_headers)
