@@ -2,13 +2,13 @@ import time
 import pandas as pd
 
 nba_headers = {
-    'User-Agent': 'Mozilla/5.0',
-    #'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0',
-    'Referer': 'https://stats.nba.com/players/drives/',
-    #'Accept': 'application/json, text/plain, */*',
-
-    'x-nba-stats-origin': 'stats',
-    'x-nba-stats-token': 'true',
+    'Host': 'stats.nba.com',
+    'Connection': 'keep-alive',
+    'Accept': 'application/json, text/plain, */*',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
+    'Referer': 'https://stats.nba.com/',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
 }
 
 def convert_height(height: str) -> float:
