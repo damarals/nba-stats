@@ -28,7 +28,7 @@ LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
 
 response = requests.get('https://pokeapi.co/api/v2/pokemon/1')
-print(response.json()
+print(response.json())
 
 
 # Get Data
