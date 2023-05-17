@@ -27,25 +27,9 @@ LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
 
-import requests
-
-url = 'https://stats.nba.com/stats/leagueLeaders'
-params = {
-    'LeagueID': '00',
-    'PerMode': 'Totals',
-    'Scope': 'S',
-    'Season': '2022-23',
-    'SeasonType': 'Playoffs',
-    'StatCategory': 'FG3_PCT'
-}
-
-response = requests.get(url, headers=nba_headers, params=params)
-data = response.json()
-print(data)
-
 # Get Data
 ## new games (+old games with a threshold)
-#da_games = get_games(season = ACTUAL_SEASON)
+da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
 #da_teams = get_teams(season = ACTUAL_SEASON)
 ## updated players info
