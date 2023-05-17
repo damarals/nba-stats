@@ -56,6 +56,7 @@ params = {
 
 response = requests.get(url, headers=headers, params=params)
 data = response.json()
+print(data)
 
 # Get Data
 ## new games (+old games with a threshold)
