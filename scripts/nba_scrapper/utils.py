@@ -5,6 +5,7 @@ nba_headers = {
     'Accept': '*/*',
     'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
     'Connection': 'keep-alive',
+    'Host': 'stats.nba.com',
     'Origin': 'https://www.nba.com',
     'Referer': 'https://www.nba.com/',
     'Sec-Fetch-Dest': 'empty',
