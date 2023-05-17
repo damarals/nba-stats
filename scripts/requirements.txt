@@ -1,3 +1,6 @@
 pandas
-requests
+requests[security]
 mysqlclient
+pyopenssl 
+ndg-httpsclient
+pyasn1
