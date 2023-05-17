@@ -27,9 +27,35 @@ LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
 
+import urllib3
+import json
+
+nba_headers = {
+    'Host': "stats.nba.com",
+    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
+    'Accept': "application/json, text/plain, */*",
+    'Accept-Language': "en-US,en;q=0.5",
+    'Accept-Encoding': "gzip, deflate, br",
+    'x-nba-stats-origin': "stats",
+    'x-nba-stats-token': "true",
+    'Connection': "keep-alive",
+    'Referer': "https://www.nba.com/",
+    'Pragma': "no-cache",
+    'Cache-Control': "no-cache"
+}
+
+url = 'https://stats.nba.com/stats/scheduleleaguev2?LeagueID=00&Season=2022'
+
+http = urllib3.PoolManager()
+
+response = http.request('GET', url, headers=nba_headers)
+json_data = json.loads(response.data)
+
+print(json_data)
+
 # Get Data
 ## new games (+old games with a threshold)
-da_games = get_games(season = ACTUAL_SEASON)
+#da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
 #da_teams = get_teams(season = ACTUAL_SEASON)
 ## updated players info
