@@ -27,19 +27,35 @@ LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
 
-from nba_api.stats.endpoints import playercareerstats
+import requests
 
-# Nikola Jokić
-career = playercareerstats.PlayerCareerStats(player_id='203999') 
+url = 'https://stats.nba.com/stats/leagueLeaders'
+headers = {
+    'Accept': '*/*',
+    'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+    'Connection': 'keep-alive',
+    'Origin': 'https://www.nba.com',
+    'Referer': 'https://www.nba.com/',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-site',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
+    'sec-ch-ua': '"Microsoft Edge";v="113", "Chromium";v="113", "Not-A.Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"'
+}
 
-# pandas data frames (optional: pip install pandas)
-career.get_data_frames()[0]
+params = {
+    'LeagueID': '00',
+    'PerMode': 'Totals',
+    'Scope': 'S',
+    'Season': '2022-23',
+    'SeasonType': 'Playoffs',
+    'StatCategory': 'FG3_PCT'
+}
 
-# json
-career.get_json()
-
-# dictionary
-career.get_dict()
+response = requests.get(url, headers=headers, params=params)
+data = response.json()
 
 # Get Data
 ## new games (+old games with a threshold)
