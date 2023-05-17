@@ -1,5 +1,4 @@
 pandas
 requests[security]
 urllib3
-json
 mysqlclient
