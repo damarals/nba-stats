@@ -19,8 +19,13 @@ def get_games(season: int) -> pd.DataFrame:
         away team IDs, arena, and other details.
     """
     season = season - 1
-    url = f'https://stats.nba.com/stats/scheduleleaguev2?LeagueID=00&Season={season}'
-    response = requests.get(url, headers = nba_headers)
+    params = {
+        'LeagueID': '00',
+        'Season': season
+    }
+
+    url = 'https://stats.nba.com/stats/scheduleleaguev2'
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
 
     games_list = []

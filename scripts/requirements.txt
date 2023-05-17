@@ -1,5 +1,3 @@
 pandas
-requests[security]
-urllib3
+requests
 mysqlclient
-nba_api
