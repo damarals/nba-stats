@@ -3,7 +3,7 @@ import requests
 import datetime
 import MySQLdb as mysql
 
-from nba_scrapper.utils import get_db_max_gamedate, insert_data_to_mysql
+from nba_scrapper.utils import get_db_max_gamedate, insert_data_to_mysql, nba_headers
 from nba_scrapper.games import get_games
 from nba_scrapper.stats import get_team_stats, get_player_stats
 from nba_scrapper.teams import get_teams
@@ -26,10 +26,11 @@ ACTUAL_SEASON = 2023 # TODO: Get this auto
 LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1)
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
+print(nba_headers)
 
 # Get Data
 ## new games (+old games with a threshold)
-da_games = get_games(season = ACTUAL_SEASON)
+#da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
 #da_teams = get_teams(season = ACTUAL_SEASON)
 ## updated players info
