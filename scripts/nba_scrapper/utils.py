@@ -2,21 +2,13 @@ import time
 import pandas as pd
 
 nba_headers = {
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Connection": "keep-alive",
-    "If-Modified-Since": "Sat, 20 Aug 2022 18:27:38 GMT",
-    "Origin": "https://www.nba.com",
-    "Referer": "https://www.nba.com/",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-site",
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
-    "sec-ch-ua": '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"Linux"',
-    "x-nba-stats-origin": "stats",
-    "x-nba-stats-token": "true",
+    'User-Agent': 'Mozilla/5.0',
+    #'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0',
+    'Referer': 'https://stats.nba.com/players/drives/',
+    #'Accept': 'application/json, text/plain, */*',
+
+    'x-nba-stats-origin': 'stats',
+    'x-nba-stats-token': 'true',
 }
 
 def convert_height(height: str) -> float:

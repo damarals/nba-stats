@@ -26,7 +26,6 @@ ACTUAL_SEASON = 2023 # TODO: Get this auto
 LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1)
 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
-print(nba_headers)
 
 # Get Data
 ## new games (+old games with a threshold)
