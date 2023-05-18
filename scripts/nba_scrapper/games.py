@@ -1,8 +1,6 @@
 import requests
 import pandas as pd
 
-from nba_scrapper.utils import nba_headers
-
 def get_games(season: int) -> pd.DataFrame:
     """
     Collects information about NBA games in a specific season.
@@ -18,10 +16,11 @@ def get_games(season: int) -> pd.DataFrame:
         represents a game detail, such as the game ID, date, home and 
         away team IDs, arena, and other details.
     """
-    params = {'LeagueID': '00', 'Season': season - 1}
-    url = 'https://stats.nba.com/stats/scheduleleaguev2'
-    response = requests.get(url, headers = nba_headers, params = params)
+    url = 'https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_11.json'
+    response = requests.get(url)
     json_data = response.json()
+
+    return json_data
 
     games_list = []
     for day in json_data['leagueSchedule']['gameDates']:

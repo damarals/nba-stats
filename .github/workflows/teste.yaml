@@ -1,7 +1,5 @@
 name: scrape
 
-on: push
-
 jobs:
   scrape:
     runs-on: ubuntu-latest
