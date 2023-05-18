@@ -16,9 +16,12 @@ def get_games(season: int) -> pd.DataFrame:
         represents a game detail, such as the game ID, date, home and 
         away team IDs, arena, and other details.
     """
-    url = 'https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_11.json'
-    response = requests.get(url)
+    url = 'https://site.web.api.espn.com/apis/v2/sports/basketball/nba/standings'
+    params = {'region': 'br', 'lang': 'pt', 'season': season}
+    response = requests.get(url, params = params)
     json_data = response.json()
+
+    return json_data
 
     games_list = []
     for day in json_data['leagueSchedule']['gameDates']:
