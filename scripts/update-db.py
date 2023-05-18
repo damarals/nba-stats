@@ -3,7 +3,6 @@ import requests
 import datetime
 import MySQLdb as mysql
 
-from nba_scrapper.scrapper import nba_scrapper_driver
 from nba_scrapper.utils import get_db_max_gamedate, insert_data_to_mysql, nba_headers
 from nba_scrapper.games import get_games
 from nba_scrapper.stats import get_team_stats, get_player_stats
