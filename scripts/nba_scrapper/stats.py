@@ -22,9 +22,11 @@ def get_player_period_stats(game_id, period) -> pd.DataFrame:
         for the specified game and period, with columns including the game ID, team ID, 
         player ID, period, statistic name and the respective value.
     """
-    url = f'https://stats.nba.com/stats/boxscoretraditionalv3?GameID={game_id}&LeagueID=00' + \
-    f'&startPeriod={period}&endPeriod={period}&startRange=0&endRange=28800&rangeType=1'
-    response = requests.get(url, headers = nba_headers)
+    url = 'https://stats.nba.com/stats/boxscoretraditionalv3'
+    params = {'GameID': game_id, 'LeagueID': '00', 
+              'startPeriod': period, 'endPeriod': period,
+              'startRange': 0, 'endRange': 28800, 'rangeType': 1}
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
 
     da_home = pd.json_normalize(json_data["boxScoreTraditional"]["homeTeam"]["players"])
@@ -107,9 +109,9 @@ def get_game_ids(season: int) -> pd.DataFrame:
     Returns:
       - da_game_ids (pd.Dataframe): A DataFrame containing the columns gameDate and gameId.
     """
-    season = season - 1
-    url = f'https://stats.nba.com/stats/scheduleleaguev2?LeagueID=00&Season={season}'
-    response = requests.get(url, headers = nba_headers)
+    url = 'https://stats.nba.com/stats/scheduleleaguev2'
+    params = {'LeagueID': '00', 'Season': season - 1}
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
 
     games_list = []
@@ -175,11 +177,13 @@ def get_team_stats(season: int) -> pd.DataFrame:
         games played (gp), wins (w), losses (l), winning percentage (wpct), 
         minutes played (min), field goals made (fgm) and others stats.
     """
-    season_str = f'{season-1}-{season-2000}'
-    url = f'https://stats.nba.com/stats/leaguedashteamstats?LastNGames=0&LeagueID=00&MeasureType=Base' + \
-    '&Month=0&OpponentTeamID=0&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N' + \
-    f'&Season={season_str}&SeasonType=Regular%20Season&TeamID=0&TwoWay=0'
-    response = requests.get(url, headers = nba_headers)
+    url = 'https://stats.nba.com/stats/leaguedashteamstats'
+    params = {'LastNGames': 0, 'LeagueID': '00', 'MeasureType': 'Base', 
+              'Month': 0, 'OpponentTeamID': 0, 'PORound': 0,
+              'PaceAdjust': 'N', 'PerMode': 'PerGame', 'Period': 0, 
+              'PlusMinus': 'N', 'Rank': 'N', 'Season': f'{season-1}-{season-2000}',
+              'SeasonType': 'Regular Season', 'TeamID': 0, 'TwoWay': 0}
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
 
     da_team_stats = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])

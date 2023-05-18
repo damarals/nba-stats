@@ -23,22 +23,21 @@ connection = mysql.connect(
 
 # Params
 ACTUAL_SEASON = 2023 # TODO: Get this auto
-LAST_GAMEDATE_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1)
+LAST_GAMEDATE_IN_DB = get_db_max_gamedate(connection) - datetime.timedelta(days = 1)
 
-print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_DB}')
+print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_IN_DB}')
 
 # Get Data
 ## new games (+old games with a threshold)
-#da_games = get_games(season = ACTUAL_SEASON)
+da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
-da_teams = get_teams(season = ACTUAL_SEASON)
-print(da_teams)
+#da_teams = get_teams(season = ACTUAL_SEASON)
 ## updated players info
 # da_players = get_players(season = ACTUAL_SEASON) 
 ## updated team stats
 # da_team_stats = get_team_stats(season = ACTUAL_SEASON)
 ## updated player stats
-# da_player_stats = get_player_stats(start_date = LAST_GAMEDATE_DB, wait_time = 2)
+# da_player_stats = get_player_stats(start_date = LAST_GAMEDATE_IN_DB, wait_time = 2)
 
 # Update DB
 ## games

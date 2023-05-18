@@ -15,8 +15,9 @@ def __get_player_info_from_id(player_id: str) -> pd.DataFrame:
       - da_player_info (pd.Dataframe): DataFrame containing the player's basic information, 
         with columns for ID, team ID, first name, full name, slug, birthdate, and others infos.
     """
-    url = f'https://stats.nba.com/stats/commonplayerinfo?LeagueID=00&PlayerID={player_id}'
-    response = requests.get(url, headers = nba_headers)
+    url = 'https://stats.nba.com/stats/commonplayerinfo'
+    params = { 'LeagueID': '00', 'PlayerID': player_id }
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
     da_player_info = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])
     da_player_info = da_player_info.assign(
@@ -59,12 +60,14 @@ def get_players(season: int) -> pd.DataFrame:
       - da_players (pd.Dataframe): DataFrame containing information on all NBA players 
         who played in the specified season.
     """
-    season_str = f'{season-1}-{season-2000}'
-
-    url = f'https://stats.nba.com/stats/playerindex?Historical=0&LeagueID=00&Season={season_str}&SeasonType=Regular%20Season'
-    response = requests.get(url, headers = nba_headers)
+    url = 'https://stats.nba.com/stats/playerindex'
+    params = {'Historical': 0, 'LeagueID': '00', 
+              'Season': f'{season-1}-{season-2000}', 
+              'SeasonType': 'Regular Season'}
+    response = requests.get(url, headers = nba_headers, params = params)
     json_data = response.json()
-    da_players_id = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])
+    da_players_id = pd.DataFrame(json_data['resultSets'][0]['rowSet'], 
+                                 columns = json_data['resultSets'][0]['headers'])
     da_players_id = da_players_id['PERSON_ID']
 
     da_players = pd.DataFrame()

@@ -19,13 +19,10 @@ def get_teams(season: int) -> pd.DataFrame:
         conference, and division.
     """
     season_str = f'{season-1}-{season-2000}'
-
-    # url = f'https://stats.nba.com/stats/leaguestandingsv3?LeagueID=00&Season={season_str}&SeasonType=Regular%20Season'
-    url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams'
-    response = requests.get(url)
+    url = 'https://stats.nba.com/stats/leaguestandingsv3'
+    params = { 'LeagueID': '00', 'Season': season_str, 'SeasonType': 'Regular Season' }
+    response = requests.get(url, params = params, headers = nba_headers)
     json_data = response.json()
-
-    return json_data
 
     da_teams = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])
     da_teams = da_teams.assign(
