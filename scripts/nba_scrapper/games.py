@@ -44,7 +44,7 @@ def get_games(season: int) -> pd.DataFrame:
                     games_list.append(game_info)
 
     da_games = pd.DataFrame(games_list)
-    da_games['date'] = pd.to_datetime(da_games['date'], format = '%Y-%m-%dT%H:%MZ').date()
+    da_games['date'] = pd.to_datetime(da_games['date'], format = '%Y-%m-%dT%H:%MZ').dt.date
     da_games = da_games.sort_values(by = 'date', ascending = True).reset_index(drop = True)
     
     return da_games

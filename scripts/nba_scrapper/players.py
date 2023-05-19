@@ -49,6 +49,6 @@ def get_players(season: int) -> pd.DataFrame:
             players_list.append(player_info)
 
     da_players = pd.DataFrame(players_list)
-    da_players['birthdate'] = pd.to_datetime(da_players['birthdate'], format = '%Y-%m-%dT%H:%MZ').date() 
+    da_players['birthdate'] = pd.to_datetime(da_players['birthdate'], format = '%Y-%m-%dT%H:%MZ').dt.date 
 
     return da_players
