@@ -35,7 +35,7 @@ def get_games(season: int) -> pd.DataFrame:
                 if pluck(game, "competitions", 0, "status", "type", "completed") is True: 
                     game_info = {
                         'id': str(pluck(game, 'id')),
-                        'date': pd.to_datetime(pluck(game, 'date'), format = '%Y-%m-%dT%H:%M%z').date,
+                        'date': str(pluck(game, 'date')),
                         'homeTeamId': str(pluck(game, 'competitions', 0, 'competitors', 0, 'team', 'id')),
                         'awayTeamId': str(pluck(game, 'competitions', 0, 'competitors', 1, 'team', 'id')),
                         'arenaName': str(pluck(game, 'competitions', 0, 'venue', 'fullName')),
@@ -44,6 +44,7 @@ def get_games(season: int) -> pd.DataFrame:
                     games_list.append(game_info)
 
     da_games = pd.DataFrame(games_list)
+    da_games['date'] = pd.to_datetime(da_games['date'], format = '%Y-%m-%dT%H:%MZ').date
     da_games = da_games.sort_values(by = 'date', ascending = True).reset_index(drop = True)
     
     return da_games
