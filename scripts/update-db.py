@@ -31,10 +31,10 @@ print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_IN_
 
 # Get Data
 ## new games (+old games with a threshold)
-da_games = get_games(season = ACTUAL_SEASON)
-print(da_games)
+#da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
-#da_teams = get_teams(season = ACTUAL_SEASON)
+da_teams = get_teams(season = ACTUAL_SEASON)
+print(da_teams)
 ## updated players info
 # da_players = get_players(season = ACTUAL_SEASON) 
 ## updated team stats

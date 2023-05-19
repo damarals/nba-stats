@@ -1,8 +1,6 @@
 import requests
 import pandas as pd
 
-from nba_scrapper.utils import nba_headers
-
 def get_teams(season: int) -> pd.DataFrame:
     """
     Collects information about NBA teams in a specific season.
@@ -18,25 +16,28 @@ def get_teams(season: int) -> pd.DataFrame:
         represents a team detail, such as the team ID, name, city, logo, 
         conference, and division.
     """
-    season_str = f'{season-1}-{season-2000}'
-    url = 'https://stats.nba.com/stats/leaguestandingsv3'
-    params = { 'LeagueID': '00', 'Season': season_str, 'SeasonType': 'Regular Season' }
-    response = requests.get(url, params = params, headers = nba_headers)
+    url = 'https://site.web.api.espn.com/apis/v2/sports/basketball/nba/standings'
+    params = {'region': 'br', 'lang': 'pt', 'level': 3}
+    response = requests.get(url, params = params)
     json_data = response.json()
 
-    da_teams = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])
-    da_teams = da_teams.assign(
-        id = lambda x: x['TeamID'],
-        city = lambda x: x['TeamCity'],
-        name = lambda x: x['TeamName'],
-        nameFull = lambda x: x['TeamCity'] + ' ' + x['TeamName'],
-        slug = lambda x: x['TeamSlug'],
-        season = lambda x: season_str,
-        conference = lambda x: x['Conference'],
-        division = lambda x: x['Division'],
-        logo = lambda x: x['TeamID'].apply(lambda id: f"https://cdn.nba.com/logos/nba/{id}/primary/L/logo.svg")
-    )
-    da_teams = da_teams[['id', 'city', 'name', 'nameFull', 'slug', 
-                         'season', 'conference', 'division', 'logo']]
+    teams_list = []
+    for conference in json_data['children']:
+        for division in conference['children']:
+            for team in division['standings']['entries']:
+                team_info = {
+                    'id': str(team['team']['id']),
+                    'city': str(team['team']['location']),
+                    'name': str(team['team']['name']),
+                    'nameFull': str(team['team']['displayName']),
+                    'abbreviation': str(team['team']['abbreviation']),
+                    'season': str(season),
+                    'conference': conference['name'].split(" ")[1],
+                    'division': str(division['name']),
+                    'logo': str(team['team']['logos'][0]['href']), # 500x500
+                }
+                teams_list.append(team_info)
+
+    da_teams = pd.DataFrame(teams_list)
     
     return da_teams
