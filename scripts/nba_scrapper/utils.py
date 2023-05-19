@@ -31,7 +31,7 @@ def pluck(obj: dict, *args: str | int) -> dict:
         Otherwise, returns {}.
     """
     for key in args:
-        if isinstance(obj, dict):
+        if isinstance(key, str):
             obj = obj.get(key, {}) # str
         else:
             obj = obj[key] # int
