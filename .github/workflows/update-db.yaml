@@ -15,7 +15,7 @@ jobs:
       - name: Configuração do ambiente
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.11"
 
       - name: Update-ca-certificates
         run: sudo update-ca-certificates
