@@ -32,7 +32,7 @@ def get_players(season: int) -> pd.DataFrame:
                 'firstName': str(pluck(player, 'firstName')),
                 'lastName': str(pluck(player, 'lastName')),
                 'fullName': str(pluck(player, 'displayName')),
-                'birthdate': pd.to_datetime(player.get('dateOfBirth'), format = '%Y-%m-%dT%H:%MZ').date(),
+                'birthdate': str(player.get('dateOfBirth')),
                 'city': str(pluck(player, 'birthPlace', 'city')),
                 'state': str(pluck(player, 'birthPlace', 'state')),
                 'height': str(pluck(player, 'height')),
@@ -49,5 +49,6 @@ def get_players(season: int) -> pd.DataFrame:
             players_list.append(player_info)
 
     da_players = pd.DataFrame(players_list)
+    da_players['birthdate'] = pd.to_datetime(da_players['birthdate'], format = '%Y-%m-%dT%H:%MZ').date() 
 
     return da_players
