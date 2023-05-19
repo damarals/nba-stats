@@ -31,7 +31,10 @@ def pluck(obj: dict, *args: str | int) -> dict:
         Otherwise, returns {}.
     """
     for key in args:
-        obj = obj.get(key, {})
+        if isinstance(obj, dict):
+            obj = obj.get(key, {}) # str
+        else:
+            obj = obj[key] # int
     return obj
 
 def convert_height(height: str) -> float:
