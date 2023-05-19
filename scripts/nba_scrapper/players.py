@@ -1,52 +1,8 @@
-import time
 import requests
 import pandas as pd
 
-from nba_scrapper.utils import nba_headers, convert_height, convert_weight
-
-def __get_player_info_from_id(player_id: str) -> pd.DataFrame:
-    """
-    Retrieves basic information about a player from the NBA Stats API and returns it as a pandas DataFrame.
-
-    Args:
-      - player_id: A string representing the player's ID (e.g. "1628369").
-
-    Returns:
-      - da_player_info (pd.Dataframe): DataFrame containing the player's basic information, 
-        with columns for ID, team ID, first name, full name, slug, birthdate, and others infos.
-    """
-    url = 'https://stats.nba.com/stats/commonplayerinfo'
-    params = { 'LeagueID': '00', 'PlayerID': player_id }
-    response = requests.get(url, headers = nba_headers, params = params)
-    json_data = response.json()
-    da_player_info = pd.DataFrame(json_data['resultSets'][0]['rowSet'], columns = json_data['resultSets'][0]['headers'])
-    da_player_info = da_player_info.assign(
-        id = lambda x: x['PERSON_ID'].astype('str'),
-        teamId = lambda x: x['TEAM_ID'].astype('str'),
-        firstName = lambda x: x['FIRST_NAME'].astype('str'),
-        lastName = lambda x: x['LAST_NAME'].astype('str'),
-        fullName = lambda x: x['DISPLAY_FIRST_LAST'].astype('str'),
-        slug = lambda x: x['PLAYER_SLUG'].astype('str'),
-        birthdate = lambda x: pd.to_datetime(x['BIRTHDATE'], format = '%Y/%m/%d %H:%M:%S').dt.date,
-        college = lambda x: x['SCHOOL'].astype('str'),
-        country = lambda x: x['COUNTRY'].astype('str'),
-        height = lambda x: x['HEIGHT'].apply(lambda h: convert_height(h)).astype("Float64"),
-        weight = lambda x: x['WEIGHT'].apply(lambda w: convert_weight(w)).astype("Float64"),
-        experience = lambda x: x['SEASON_EXP'].astype("Int64"),
-        jerseyNumber = lambda x: x['JERSEY'].astype('str'),
-        position = lambda x: x['POSITION'].astype('str'),
-        rosterStatus = lambda x: x['ROSTERSTATUS'].astype('str'),
-        draftYear = lambda x: x['DRAFT_YEAR'].apply(lambda y: y if y != 'Undrafted' else pd.NA).astype("Int64"),
-        draftRound = lambda x: x['DRAFT_ROUND'].apply(lambda r: r if r != 'Undrafted' else pd.NA).astype("Int64"),
-        draftNumber = lambda x: x['DRAFT_NUMBER'].apply(lambda n: n if n != 'Undrafted' else pd.NA).astype("Int64"),
-        headshot = lambda x: x['PERSON_ID'].apply(lambda p_id: f'https://cdn.nba.com/headshots/nba/latest/1040x760/{p_id}.png')
-    )
-    da_player_info = da_player_info[['id', 'teamId', 'firstName', 'lastName', 'fullName', 'slug', 
-                                     'birthdate', 'college', 'country', 'height', 'weight', 
-                                     'experience', 'jerseyNumber', 'position', 'rosterStatus', 
-                                     'draftYear', 'draftRound', 'draftNumber', 'headshot']]
-
-    return da_player_info
+from nba_scrapper.utils import convert_height, convert_weight, pluck
+from nba_scrapper.teams import get_teams
 
 def get_players(season: int) -> pd.DataFrame:
     """
@@ -60,26 +16,38 @@ def get_players(season: int) -> pd.DataFrame:
       - da_players (pd.Dataframe): DataFrame containing information on all NBA players 
         who played in the specified season.
     """
-    url = 'https://stats.nba.com/stats/playerindex'
-    params = {'Historical': 0, 'LeagueID': '00', 
-              'Season': f'{season-1}-{season-2000}', 
-              'SeasonType': 'Regular Season'}
-    response = requests.get(url, headers = nba_headers, params = params)
-    json_data = response.json()
-    da_players_id = pd.DataFrame(json_data['resultSets'][0]['rowSet'], 
-                                 columns = json_data['resultSets'][0]['headers'])
-    da_players_id = da_players_id['PERSON_ID']
+    teams = get_teams(season)
 
-    da_players = pd.DataFrame()
-    for i, player_id in enumerate(da_players_id):
-        start_time = time.time()
+    players_list = []
+    for team in teams.itertuples():
+        url = f'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team.id}'
+        params = {'region': 'br', 'lang': 'pt', 'enable': 'roster'}
+        response = requests.get(url, params = params)
+        json_data = response.json()
 
-        da_player_info = __get_player_info_from_id(player_id)
-        da_players = pd.concat([da_players, da_player_info], ignore_index = True)
+        for player in pluck(json_data, 'team', 'athletes'):
+            player_info = {
+                'id': str(pluck(player, 'id')),
+                'teamId': str(team.id),
+                'firstName': str(pluck(player, 'firstName')),
+                'lastName': str(pluck(player, 'lastName')),
+                'fullName': str(pluck(player, 'displayName')),
+                'birthdate': pd.to_datetime(player.get('dateOfBirth'), format = '%Y-%m-%dT%H:%MZ').date(),
+                'city': str(pluck(player, 'birthPlace', 'city')),
+                'state': str(pluck(player, 'birthPlace', 'state')),
+                'height': str(pluck(player, 'height')),
+                'weight': str(pluck(player, 'weight')),
+                'experience': str(pluck(player, 'experience', 'years')),
+                'jerseyNumber': str(pluck(player, 'jersey')),
+                'position': str(pluck(player, 'position', 'displayName')),
+                'rosterStatus': str(pluck(player, 'status', 'type')),
+                'draftYear': str(pluck(player, 'draft', 'year')),
+                'draftRound': str(pluck(player, 'draft', 'round')),
+                'draftNumber': str(pluck(player, 'draft', 'selection')),
+                'headshot': str(pluck(player, 'headshot', 'href')) # 600x436
+            }
+            players_list.append(player_info)
 
-        elapsed_time = time.time() - start_time
-        print(f'[{i+1}/{len(da_players_id)} {elapsed_time:.0f}s] Player ID: {player_id}')
-        
-        time.sleep(1)
+    da_players = pd.DataFrame(players_list)
 
     return da_players

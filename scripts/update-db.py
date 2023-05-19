@@ -30,13 +30,12 @@ LAST_GAMEDATE_IN_DB = get_db_max_gamedate(connection) - datetime.timedelta(days 
 print(f'Actual Season: {ACTUAL_SEASON}, Last Game Date in DB: {LAST_GAMEDATE_IN_DB}')
 
 # Get Data
-## new games (+old games with a threshold)
-#da_games = get_games(season = ACTUAL_SEASON)
+## all games in the season (only completed)
+da_games = get_games(season = ACTUAL_SEASON)
 ## updated teams info
 da_teams = get_teams(season = ACTUAL_SEASON)
-print(da_teams)
 ## updated players info
-# da_players = get_players(season = ACTUAL_SEASON) 
+da_players = get_players(season = ACTUAL_SEASON) # FIXME: Handle missing values
 ## updated team stats
 # da_team_stats = get_team_stats(season = ACTUAL_SEASON)
 ## updated player stats

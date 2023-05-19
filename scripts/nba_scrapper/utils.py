@@ -1,3 +1,4 @@
+import datetime
 import time
 import pandas as pd
 
@@ -16,6 +17,22 @@ nba_headers = {
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"'
 }
+
+def pluck(obj: dict, *args: str | int) -> dict:
+    """
+    Returns the value of a nested key in a dictionary.
+
+    Parameters:
+      - obj (dict): The dictionary to search.
+      - *args (str): The keys to search for, in order.
+
+    Returns:
+      - obj (dict): The subobject value of the nested key, if found. 
+        Otherwise, returns {}.
+    """
+    for key in args:
+        obj = obj.get(key, {})
+    return obj
 
 def convert_height(height: str) -> float:
     """
@@ -103,7 +120,8 @@ def generate_insert_query(table_name, df, primary_keys = None, overwrite = False
 
     return insert_query
 
-def insert_data_to_mysql(table_name, df, cnx, batch_size = 10000, sleep_time = 30) -> None:
+def insert_data_to_mysql(table_name: str, df: pd.DataFrame, cnx, 
+                         batch_size: int = 10000, sleep_time: int = 30) -> None:
     """
     Inserts data from a pandas DataFrame into a MySQL table in batches.
 
@@ -129,6 +147,8 @@ def insert_data_to_mysql(table_name, df, cnx, batch_size = 10000, sleep_time = 3
         insert_query = generate_insert_query(table_name, df, primary_keys = ['id'], overwrite = True)
     elif table_name == 'player_stats':
         insert_query = generate_insert_query(table_name, df, primary_keys = ['gameId', 'teamId', 'playerId', 'period', 'statName'])
+    else:
+        raise ValueError(f"table_name '{table_name}' not recognized")
 
     iters = range(0, len(df), batch_size)
     for i in iters:
@@ -141,7 +161,7 @@ def insert_data_to_mysql(table_name, df, cnx, batch_size = 10000, sleep_time = 3
         print(f"Inseridas {i+batch_size}/{len(df)} linhas em {time.time() - start_time:.2f} segundos")
         time.sleep(sleep_time)
 
-def get_db_max_gamedate(cnx):
+def get_db_max_gamedate(cnx) -> datetime.date:
     """
     Retrieves the maximum date present in the 'date' column of the 'games' table of the database.
 

@@ -1,6 +1,8 @@
 import requests
 import pandas as pd
 
+from nba_scrapper.utils import pluck
+
 def get_teams(season: int) -> pd.DataFrame:
     """
     Collects information about NBA teams in a specific season.
@@ -22,19 +24,19 @@ def get_teams(season: int) -> pd.DataFrame:
     json_data = response.json()
 
     teams_list = []
-    for conference in json_data['children']:
-        for division in conference['children']:
-            for team in division['standings']['entries']:
+    for conference in pluck(json_data, 'children'):
+        for division in pluck(conference, 'children'):
+            for team in pluck(division, 'standings', 'entries'):
                 team_info = {
-                    'id': str(team['team']['id']),
-                    'city': str(team['team']['location']),
-                    'name': str(team['team']['name']),
-                    'nameFull': str(team['team']['displayName']),
-                    'abbreviation': str(team['team']['abbreviation']),
+                    'id': str(pluck(team, 'team', 'id')),
+                    'city': str(pluck(team, 'team', 'location')),
+                    'name': str(pluck(team, 'team', 'name')),
+                    'nameFull': str(pluck(team, 'team', 'displayName')),
+                    'abbreviation': str(pluck(team, 'team', 'abbreviation')),
                     'season': str(season),
-                    'conference': conference['name'].split(" ")[1],
-                    'division': str(division['name']),
-                    'logo': str(team['team']['logos'][0]['href']), # 500x500
+                    'conference': str(pluck(conference, 'name')).split(" ")[1],
+                    'division': str(pluck(division, 'name')),
+                    'logo': str(pluck(team, 'team', 'logos', 0, 'href')), # 500x500
                 }
                 teams_list.append(team_info)
 
